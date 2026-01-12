@@ -23,7 +23,7 @@ public void draw()
            {
             if(frameCount%40<20) fill(150,100,100);
            }
-           rect(i*800/rownum, j*800/rownum, 800/rownum, 800/rownum);
+           rect((int)(i*800/rownum), (int)(j*800/rownum), (int)(800/rownum), (int)(800/rownum));
            fill(0);
            textSize(15);
            if(!minefield[i][j]&&!cover[i][j])text(Integer.toString(countNeighborTrues(i,j)), i*800/rownum+800/rownum/2, j*800/rownum+800/rownum/2);
