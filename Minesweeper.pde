@@ -65,7 +65,7 @@ public boolean[][] fill2D(boolean[][] vals, boolean val){
   }
   return vals;
 }
-public void clear(int row, int col, int it)
+public void cclear(int row, int col, int it)
 {
     if(it==0)
     {
@@ -81,7 +81,7 @@ public void clear(int row, int col, int it)
         if(isValidOnNbyN(rownum, rownum, newRow, newCol))
         {
             cover[newRow][newCol] = false;
-            clear(newRow, newCol, it +1);
+            cclear(newRow, newCol, it +1);
         }
     }
     }
@@ -106,7 +106,7 @@ public void mousePressed()
         {
             gamestate = -1;
         }
-        else clear(x,y,0);
+        else cclear(x,y,0);
     }
     else
     {
