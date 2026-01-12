@@ -1,23 +1,28 @@
-int rownum = 32;
-boolean[][] minefield;
-boolean[][] cover = new boolean[rownum][rownum];
-boolean[][] flags = new boolean[rownum][rownum];
-void setup()
+public int rownum = 32;
+public boolean[][] minefield;
+public boolean[][] cover = new boolean[rownum][rownum];
+public boolean[][] flags = new boolean[rownum][rownum];
+public int gamestate = 0;
+public void setup()
 {
     minefield = GenerateMinefield();
     cover = fill2D(cover, true);
     flags = fill2D(flags,false);
     size(800,800);
 }
-void draw()
+public void draw()
 {
     for(int i = 0; i<minefield.length;i++)
     {
         for(int j = 0; j<minefield[i].length;j++)
         {
            fill(150);
-           if(cover[i][j])fill(100);
+           if(cover[i][j] || gamestate==-1)fill(100);
            if(cover[i][j]&&flags[i][j]) fill(150,100,100);
+           if(minefield[i][j] && gamestate==-1)
+           {
+            if(frameCount%40<20) fill(150,100,100);
+           }
            rect(i*800/rownum, j*800/rownum, 800/rownum, 800/rownum);
            fill(0);
            textSize(15);
@@ -60,7 +65,7 @@ public boolean[][] fill2D(boolean[][] vals, boolean val){
   }
   return vals;
 }
-void clear(int row, int col, int it)
+public void clear(int row, int col, int it)
 {
     if(it==0)
     {
@@ -82,22 +87,44 @@ void clear(int row, int col, int it)
     }
 
 }
-void mousePressed()
+public void mousePressed()
 {
-    int i=(int)(mouseY/(800/rownum));
-    int j=(int)(mouseX/(800/rownum));
+    if(gamestate==-1)
+    {
+        cover = fill2D(cover, true);
+        flags = fill2D(flags,false);
+        minefield = GenerateMinefield();
+        gamestate = 0;
+    }
+    if (gamestate==0)
+    {
+    int y=(int)(mouseY/(800/rownum));
+    int x=(int)(mouseX/(800/rownum));
     if(mouseButton==LEFT)
     {
-        if(minefield[j][i])
+        if(minefield[x][y])
         {
-            cover = fill2D(cover, true);
-            flags = fill2D(flags,false);
-            minefield = GenerateMinefield();
+            gamestate = -1;
         }
-        else clear(j,i,0);
+        else clear(x,y,0);
     }
     else
     {
-        flags[j][i]=!flags[j][i];
+        flags[x][y]=!flags[x][y];
+    }
+    boolean win = true;
+    for(int i = 0; i<rownum;i++)
+    {
+        for(int j = 0; j<rownum;j++)
+        {
+            if(cover[i][j] && !minefield[i][j])win=false;   
+        }
+    }
+    if(win==true)
+    {
+        cover = fill2D(cover, true);
+        flags = fill2D(flags,false);
+        minefield = GenerateMinefield();
+    }
     }
 }
