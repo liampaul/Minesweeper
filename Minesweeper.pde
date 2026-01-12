@@ -98,8 +98,8 @@ public void mousePressed()
     }
     if (gamestate==0)
     {
-    int y=(int)(mouseY/(800/rownum));
-    int x=(int)(mouseX/(800/rownum));
+    int y=(int)(mouseY/(800/(float)rownum));
+    int x=(int)(mouseX/(800/(float)rownum));
     if(mouseButton==LEFT)
     {
         if(minefield[x][y])
