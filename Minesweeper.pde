@@ -26,7 +26,7 @@ public void draw()
            rect((int)(i*800/rownum), (int)(j*800/rownum), (int)(800/rownum), (int)(800/rownum));
            fill(0);
            textSize(15);
-           if(!minefield[i][j]&&!cover[i][j])text(Integer.toString(countNeighborTrues(i,j)), i*800/rownum+800/rownum/2, j*800/rownum+800/rownum/2);
+           if(!minefield[i][j]&&!cover[i][j])text(countNeighborTrues(i,j) + "", i*800/rownum+800/rownum/2, j*800/rownum+800/rownum/2);
         }
   }
 }
